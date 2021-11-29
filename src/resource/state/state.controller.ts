@@ -1,5 +1,5 @@
 import { Controller, Delete, Get, Param, Put, UseGuards } from '@nestjs/common';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from 'src/module/auth/auth.guard';
 import { StateService } from './state.service';
 
 @Controller('state')

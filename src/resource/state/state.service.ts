@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { StoreService } from 'src/store/store.service';
+import { StoreService } from 'src/module/store/store.service';
 
 @Injectable()
 export class StateService {

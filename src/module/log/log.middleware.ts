@@ -5,6 +5,7 @@ import { Request } from 'express';
 export class LogMiddleware implements NestMiddleware {
   use(req: Request, res: any, next: () => void) {
     Logger.log(`Route: ${req.originalUrl}`);
+
     next();
   }
 }
