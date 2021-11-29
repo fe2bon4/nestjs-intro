@@ -21,21 +21,12 @@ export class AuthService {
   async auth(username: string, password: string): Promise<string | null> {
     // Fetch User and Role from Database
     const user = this.store[username];
-
-    // Default to nobody token
     if (!user) return null;
-
     if (!(user.password === password)) return null;
 
-    const result = jwt.sign(
-      { role: user.role, username, id: user.id },
-      PRIV_KEY,
-      {
-        expiresIn: '1d',
-      },
-    );
-
-    return result;
+    return jwt.sign({ role: user.role, username, id: user.id }, PRIV_KEY, {
+      expiresIn: '1d',
+    });
   }
 
   async verify(token): Promise<boolean> {
@@ -49,9 +40,9 @@ export class AuthService {
 
   async decode(token): Promise<any | null> {
     return new Promise((resolve) => {
-      jwt.decode(token, PRIV_KEY, (err, decoded) => {
-        if (err) resolve(null);
-        resolve(decoded);
+      jwt.verify(token, PRIV_KEY, (err, decoded) => {
+        if (err) return resolve(null);
+        return resolve(decoded);
       });
     });
   }

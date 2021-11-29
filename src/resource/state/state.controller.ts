@@ -1,7 +1,5 @@
 import { Controller, Delete, Get, Param, Put, UseGuards } from '@nestjs/common';
-import { AuthGuard } from 'src/module/auth/auth.guard';
-import { Roles } from 'src/module/auth/role.decorator';
-import { RolesGuard } from 'src/module/auth/role.guard';
+import { AuthGuard, Roles, RolesGuard } from 'src/module/auth/auth.guard';
 import { ERole } from 'src/module/auth/types';
 import { StateService } from './state.service';
 
