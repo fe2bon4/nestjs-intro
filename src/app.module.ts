@@ -8,8 +8,6 @@ import {
   AuthDecodeMiddleware,
   AuthMiddleware,
 } from './module/auth/auth.middleware';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 @Module({
   imports: [
     StateModule,
@@ -20,8 +18,8 @@ import { AppService } from './app.service';
       isGlobal: true,
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
