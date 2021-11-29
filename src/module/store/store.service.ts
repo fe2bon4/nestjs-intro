@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { CommonDictionary, Store, StoreItem } from './types';
 import { v4 } from 'uuid';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class StoreService {
+  constructor(private readonly configService: ConfigService) {}
   private store: Store = {
     state: [],
   };

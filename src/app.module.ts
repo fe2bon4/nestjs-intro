@@ -1,8 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-
 import { LogMiddleware } from './module/log/log.middleware';
-
 import { StateModule } from './resource/state/state.module';
 import { StoreModule } from './module/store/store.module';
 import { AuthModule } from './module/auth/auth.module';
