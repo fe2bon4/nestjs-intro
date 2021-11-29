@@ -3,16 +3,15 @@ import { StoreService } from 'src/module/store/store.service';
 
 @Injectable()
 export class StateService {
-  constructor(private readonly store: StoreService) {}
   get(id: string): any {
-    return this.store.get('state', id);
+    return id;
   }
 
   put(id: string): any {
-    return this.store.insert('state', { id });
+    return id;
   }
 
   delete(id: string): any {
-    return this.store.delete('state', id);
+    return id;
   }
 }

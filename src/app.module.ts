@@ -26,6 +26,6 @@ export class AppModule implements NestModule {
     consumer.apply(LogMiddleware).forRoutes('/');
     consumer
       .apply(AuthMiddleware, AuthDecodeMiddleware)
-      .forRoutes('/state', '/config');
+      .forRoutes('/state', '/config', '/store');
   }
 }
