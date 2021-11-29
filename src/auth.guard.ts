@@ -1,21 +1,11 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { Request } from 'express';
-const PRIV_KEY = 'asdasdasdaaaasdadawsd';
-
-const verifyToken = async (token): Promise<boolean> => {
-  return new Promise((resolve, reject) => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const jwt = require('jsonwebtoken');
-    jwt.verify(token, PRIV_KEY, (error) => {
-      if (error) return reject(false);
-      return resolve(true);
-    });
-  });
-};
+import { AuthService } from './auth/auth.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
+  constructor(private readonly authService: AuthService) {}
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
@@ -24,13 +14,10 @@ export class AuthGuard implements CanActivate {
 
     if (!authorization) return false;
 
-    const [_bearer, token] = authorization.split(' ');
+    const [, token] = authorization.split(' ');
 
-    try {
-      const isValidToken = verifyToken(token);
-      return isValidToken;
-    } catch (_e) {
-      return false;
-    }
+    this.authService;
+
+    return this.authService.verify(token);
   }
 }
