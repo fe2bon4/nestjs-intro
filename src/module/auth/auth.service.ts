@@ -1,18 +1,34 @@
 import { Injectable } from '@nestjs/common';
-
-const AUTH_USERNAME = 'dna';
-const AUTH_PASSWORD = 'F0nch3rt0';
+import { ERole } from './types';
 const PRIV_KEY = 'asdasdasdaaaasdadawsd';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const jwt = require('jsonwebtoken');
 @Injectable()
 export class AuthService {
-  auth(username: string, password: string): string | null {
-    if (!(username === AUTH_USERNAME) || !(password === AUTH_PASSWORD))
-      return null;
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const jwt = require('jsonwebtoken');
+  store = {
+    dna: {
+      id: '1',
+      role: ERole.ADMIN,
+      password: 'F0nch3rt0',
+    },
+    nobody: {
+      id: '0',
+      role: ERole.NOBODY,
+      password: 'nopassword',
+    },
+  };
+  async auth(username: string, password: string): Promise<string | null> {
+    // Fetch User and Role from Database
+    const user = this.store[username];
+
+    // Default to nobody token
+    if (!user) return null;
+
+    if (!(user.password === password)) return null;
+
     const result = jwt.sign(
-      { username, password, status: 'Active' },
+      { role: user.role, username, id: user.id },
       PRIV_KEY,
       {
         expiresIn: '1d',
@@ -24,11 +40,18 @@ export class AuthService {
 
   async verify(token): Promise<boolean> {
     return new Promise((resolve) => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const jwt = require('jsonwebtoken');
       jwt.verify(token, PRIV_KEY, (error) => {
         if (error) return resolve(false);
         return resolve(true);
+      });
+    });
+  }
+
+  async decode(token): Promise<any | null> {
+    return new Promise((resolve) => {
+      jwt.decode(token, PRIV_KEY, (err, decoded) => {
+        if (err) resolve(null);
+        resolve(decoded);
       });
     });
   }
