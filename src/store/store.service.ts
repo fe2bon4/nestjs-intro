@@ -1,25 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { CommonDictionary, Store, StoreItem } from './types';
 import { v4 } from 'uuid';
-enum EStoreItemStatus {
-  DRAFT,
-  ACTIVE,
-  INACTIVE,
-  ARCHIVED,
-}
-
-type StoreItem<T extends Record<string, any> = any> = {
-  id: string;
-  created_date: number;
-  updated_date: number;
-  status: EStoreItemStatus;
-  attribute: T;
-};
-
-type Store = {
-  [key: string]: Array<StoreItem<any>>;
-};
-
-type CommonDictionary = Record<string, any>;
 
 @Injectable()
 export class StoreService {
